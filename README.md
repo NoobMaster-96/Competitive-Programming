@@ -1,1 +1,1 @@
-# Competitive-Programming-Coding-Blocks-Course
+# Competitive-Programming
