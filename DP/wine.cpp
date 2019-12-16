@@ -17,7 +17,7 @@ int maxProfit(vector<int> price, int be, int en, int year){ //memoization
 	return memo[be][en];
 }
 
-int maxProfitDP(vector<int> price, int n){
+int maxProfitDP(vector<int> price, int n){ // pure dp
 	vector<vector<int>> DP(n,vector<int>(n));
 	int year = n;
 
