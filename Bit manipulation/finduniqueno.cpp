@@ -6,7 +6,7 @@ int main(){
 	cin>>n;
 	int ans = 0;
 	int temp;
-	for(int i=0;i<n*2+1;i++){
+	for(int i=0;i<n;i++){
 		cin>>temp;
 		ans ^= temp;
 	}
