@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define endl "\n";
+#define endl "\n"
 
 template<typename T>
 class graph{
@@ -51,6 +51,37 @@ public:
 		}
 		cout<<endl;
 	}
+
+	void topologicalsort(){
+		map<T,int> indegree;
+		for(auto i:adjlist){
+			indegree[i.first] = 0;
+		}
+		for(auto i:adjlist){
+			int x = i.first;
+			for(auto y:i.second){
+				indegree[y]++;
+			}
+		}
+		//bfs
+		queue<T> q;
+		for(auto i:indegree){
+			if(i.second==0){
+				q.push(i.first);
+			}
+		}
+		while(!q.empty()){
+			T node = q.front();
+			q.pop();
+			cout<<node<<" ";
+			for(auto i:adjlist[node]){
+				indegree[i]--;
+				if(indegree[i]==0){
+					q.push(i);
+				}
+			}
+		}
+	}
 };
 
 int main(){
@@ -68,5 +99,15 @@ int main(){
 	g.addedge(8,9,0);
 	g.addedge(4,5,0);
 	g.dfsTS();
+
+	graph<int> G;
+	G.addedge(0,2,0);
+	G.addedge(1,2,0);
+	G.addedge(4,5,0);
+	G.addedge(2,3,0);
+	G.addedge(1,4,0);
+	G.addedge(2,5,0);
+	G.addedge(3,5,0);
+	G.topologicalsort();
 	
 }

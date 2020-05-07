@@ -51,16 +51,12 @@ int main(){
 	addedge(adjlist,3,4);
 	addedge(adjlist,4,0);
 	dfs(adjlist,6,0);
-	/*for(int i=0;i<6;i++){
+	for(int i=0;i<6;i++){
 		cout<<i<<"- ";
 		for(int num: adjlist[i]){
 			cout<<num<<" ";
 		}
 		cout<<endl;
-	}*/
-	string a="apple",b="batman";
-	if(b>a){
-		cout<<b;
 	}
 	return 0;
 }
