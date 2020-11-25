@@ -1,62 +1,69 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void addedge(vector<int> adjlist[], int s, int d){
-	adjlist[s].push_back(d);
-	adjlist[d].push_back(s);
-}
+class graph{
+	vector<int> *adjlist;
+	int N;
+public:
+	vector<bool> visited;
+	graph(int n){
+		N = n;
+		adjlist = new vector<int>[N];
+		visited = vector<bool>(N,false);
+	}
 
-void bfs(vector<int> adjlist[], int V){
-	vector<bool> visited(V,false);
-	queue<int> q;
-	q.push(0);
-	visited[0] = true;
-	while(!q.empty()){
-		int temp = q.front();
-		q.pop();
-		cout<<temp<<" ";
-		for(int num:adjlist[temp]){
-			if(visited[num] == false){
-				q.push(num);
-				visited[num] = true;
+	void addedge(int u, int v, bool bidir=true){
+		adjlist[u].push_back(v);
+		if(bidir){
+			adjlist[v].push_back(u);
+		}
+	}
+	
+	void dfs(int source, int goal){
+		visited[source] = true;
+		cout<<source<<"->";
+		if(source==goal){
+			return;
+		}
+		for(auto nbr:adjlist[source]){
+			if(!visited[nbr]){
+				dfs(nbr,goal);
 			}
 		}
 	}
-}
 
-void dfshelper(vector<int> adjlist[], vector<int> &visited, int source){
-	visited[source] = true;
-	cout<<source<<" ";
-	for(int next:adjlist[source]){
-		if(!visited[next]){
-			dfshelper(adjlist,visited,next);
+	void bfs(int source, int goal){
+		queue<int> q;
+		q.push(source);
+		visited[source] = true;
+		while(!q.empty()){
+			int node = q.front();
+			cout<<node<<" ";
+			q.pop();
+			for(auto nbr:adjlist[node]){
+				if(!visited[nbr]){
+					q.push(nbr);
+					visited[nbr] = true;
+				}
+			}
 		}
 	}
-}
-
-void dfs(vector<int> adjlist[], int V, int source){
-	vector<int> visited(V,false);
-	dfshelper(adjlist,visited,source);
-}
+};
 
 int main(){
 	int V=6;
-	//cin>>V;
-	vector<int> adjlist[V];
-	addedge(adjlist,1,0);
-	addedge(adjlist,1,2);
-	addedge(adjlist,2,4);
-	addedge(adjlist,2,3);
-	addedge(adjlist,3,5);
-	addedge(adjlist,3,4);
-	addedge(adjlist,4,0);
-	dfs(adjlist,6,0);
-	for(int i=0;i<6;i++){
-		cout<<i<<"- ";
-		for(int num: adjlist[i]){
-			cout<<num<<" ";
-		}
-		cout<<endl;
+	graph g(6);
+	g.addedge(1,0);
+	g.addedge(1,2);
+	g.addedge(2,3);
+	g.addedge(2,4);
+	g.addedge(3,5);
+	g.addedge(3,4);
+	g.addedge(4,0);
+	for(int i=0;i<V;i++){
+		g.visited[i] = false;
 	}
+	g.bfs(0,3);
+	
 	return 0;
 }
